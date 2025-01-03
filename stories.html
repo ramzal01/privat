@@ -1,0 +1,140 @@
+stories.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semua Cerita</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .story-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .story-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .story-content {
+            line-height: 1.6;
+        }
+        .delete-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .delete-button:hover {
+            background: #c82333;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="curhat.html" class="back-button">Kembali</a>
+        <h1>Semua Cerita</h1>
+        <div id="storiesContainer"></div>
+    </div>
+
+    <script>
+        function deleteStory(index) {
+            if (confirm('Apakah anda yakin ingin menghapus cerita ini?')) {
+                let stories = JSON.parse(localStorage.getItem('stories') || '[]');
+                stories.splice(index, 1);
+                localStorage.setItem('stories', JSON.stringify(stories));
+                displayStories();
+            }
+        }
+
+        function displayStories() {
+            const stories = JSON.parse(localStorage.getItem('stories') || '[]');
+            const container = document.getElementById('storiesContainer');
+            container.innerHTML = '';
+            
+            stories.reverse().forEach((story, index) => {
+                const storyElement = document.createElement('div');
+                storyElement.className = 'story-card';
+                storyElement.innerHTML = `
+                    <div class="story-header">
+                        <strong>${story.name}</strong>
+                        <div>
+                            <span>${story.date}</span>
+                            <button onclick="deleteStory(${stories.length - 1 - index})" class="delete-button">Hapus</button>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        ${story.story}
+                    </div>
+                `;
+                container.appendChild(storyElement);
+            });
+        }
+
+        function displayStories() {
+            const stories = JSON.parse(localStorage.getItem('stories') || '[]');
+            const container = document.getElementById('storiesContainer');
+            container.innerHTML = '';
+            
+            stories.reverse().forEach((story, index) => {
+            const storyElement = document.createElement('div');
+            storyElement.className = 'story-card';
+            storyElement.innerHTML = `
+                <div class="story-header">
+                <strong>${story.name}</strong>
+                <div>
+                    <span>${story.date}</span>
+                </div>
+                </div>
+                <div class="story-content">
+                ${story.story}
+                </div>
+            `;
+            container.appendChild(storyElement);
+            });
+        }
+
+        window.onload = displayStories;
+        const deleteAllButton = document.createElement('button');
+        deleteAllButton.textContent = 'Hapus Semua Cerita';
+        deleteAllButton.className = 'delete-button';
+        deleteAllButton.style.marginBottom = '20px';
+        deleteAllButton.onclick = function() {
+            if (confirm('Apakah anda yakin ingin menghapus semua cerita?')) {
+            localStorage.removeItem('stories');
+            displayStories();
+            }
+        };
+        document.querySelector('.container').insertBefore(deleteAllButton, document.getElementById('storiesContainer'));
+    </script>
+</body>
+</html>

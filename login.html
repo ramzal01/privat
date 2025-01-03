@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #message {
+            color: red;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm" onsubmit="return checkPassword(event)">
+            <input type="password" id="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function checkPassword(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const correctPassword = "ramzal gaming"; // Ganti dengan password yang diinginkan
+            
+            if (password === correctPassword) {
+                window.location.href = "private.html"; // Ganti dengan halaman tujuan
+            } else {
+                document.getElementById('message').textContent = "Password salah!, orang asing di larang masuk";
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
